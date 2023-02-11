@@ -1,0 +1,50 @@
+variables:
+  - name: System.Debug
+    value: true
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - DevOps/Infraestructure/*.
+
+name: web_shop_infraestructure_$(Build.SourceBranchName)
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Build
+  jobs:
+  - job: 'Build_Terraform'
+    steps:
+
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
+      displayName: 'Install Terraform latest'
+
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+      displayName: 'Terraform : init'
+      inputs:
+        workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps/Infraestructure/Azure'
+        backendServiceArm: AzureAccount
+        backendAzureRmResourceGroupName: terraform
+        backendAzureRmStorageAccountName: saterraformic
+        backendAzureRmContainerName: terraform
+        backendAzureRmKey: tf/terraform.tfstate
+
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+      displayName: 'Terraform : validate'
+      inputs:
+        command: validate
+        workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps/Infraestructure/Azure'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files'
+      inputs:
+        SourceFolder: '$(System.DefaultWorkingDirectory)/DevOps/Infraestructure/Azure'
+        TargetFolder: '$(System.DefaultWorkingDirectory)'   
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'           

@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  web-security:
+    container_name: web-security
+    build: ../../Front/Security    
+    ports:
+      - "1001:80"
+    restart: always
