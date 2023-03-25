@@ -24,7 +24,7 @@ stages:
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
       displayName: 'Terraform : init'
       inputs:
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        workingDirectory: '$(Build.ArtifactStagingDirectory)'
         backendServiceArm: $(ServiceConnection)
         backendAzureRmResourceGroupName: $(ResourceGroupTerraform)
         backendAzureRmStorageAccountName: $(StoregeAccountTerraform)
@@ -35,5 +35,5 @@ stages:
       displayName: 'Terraform : apply'
       inputs:
         command: apply
-        commandOptions: '-var-file=$(System.DefaultWorkingDirectory)/$(FileVar)'
+        commandOptions: '-var-file=$(Build.ArtifactStagingDirectory)/$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)      
