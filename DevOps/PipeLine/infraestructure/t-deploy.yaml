@@ -34,4 +34,5 @@ stages:
       displayName: 'Terraform : azurerm'
       inputs:
         command: apply
+        commandOptions: '-var-file="variables.tfvars"'
         environmentServiceNameAzureRM: $(ServiceConnection)      
