@@ -14,9 +14,7 @@ stages:
     - task: DownloadPipelineArtifact@2
       displayName: 'Get Artifact'
       inputs:
-        buildType: 'current'
-        artifactName: 'drop'
-        targetPath: '$(System.ArtifactsDirectory)'    
+        artifact: 'drop'
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
       displayName: 'Install Terraform latest'
