@@ -33,4 +33,5 @@ stages:
       StoregeAccountTerraform: $(StoregeAccountTerraform)
       TerraformContainer: $(TerraformContainer)
       TerraformFile: $(TerraformFile)
+      FileVar: $(FileVar)
 

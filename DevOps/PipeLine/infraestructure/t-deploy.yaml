@@ -4,6 +4,7 @@ parameters:
   StoregeAccountTerraform: default
   TerraformContainer: default
   TerraformFile: default
+  FileVar: default
 
 stages:
 - stage: Deploy
@@ -34,5 +35,5 @@ stages:
       displayName: 'Terraform : azurerm'
       inputs:
         command: apply
-        commandOptions: '-var-file="variables.tfvars"'
+        commandOptions: '-var-file="$(FileVar)"'
         environmentServiceNameAzureRM: $(ServiceConnection)      

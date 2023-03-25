@@ -11,8 +11,10 @@ variables:
   - name: TerraformContainer
     value: terraform    
   - name: TerraformFile
-    value: tf/terraform.tfstate     
+    value: tf/terraform.tfstate        
   # Build
   - name: PathProyect
     value: /DevOps/Infraestructure/Azure            
   # Deploy
+  - name: FileVar
+    value: dev.tfvars    
