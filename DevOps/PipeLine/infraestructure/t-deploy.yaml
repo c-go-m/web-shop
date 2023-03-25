@@ -38,7 +38,7 @@ stages:
         pwd
         echo $(System.DefaultWorkingDirectory)
         echo $(Build.ArtifactStagingDirectory)
-        ls        
+        ls -l /opt/hostedtoolcache/terraform/1.4.2/x64/      
       displayName: ejemplo        
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
