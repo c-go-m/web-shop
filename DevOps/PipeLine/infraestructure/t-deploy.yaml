@@ -35,6 +35,9 @@ stages:
 
     - script: | 
         cd /opt/hostedtoolcache/terraform/1.4.2/x64/
+        pwd
+        echo $(System.DefaultWorkingDirectory)
+        echo $(Build.ArtifactStagingDirectory)
         ls        
       displayName: ejemplo        
 
