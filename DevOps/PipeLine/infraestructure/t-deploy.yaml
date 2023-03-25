@@ -16,7 +16,7 @@ stages:
       inputs:
         buildType: 'current'
         downloadType: 'single'
-        downloadType: '$(Build.ArtifactStagingDirectory)'
+        downloadPath: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'drop'
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
