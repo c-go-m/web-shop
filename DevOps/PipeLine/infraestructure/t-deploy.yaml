@@ -31,7 +31,7 @@ stages:
         backendAzureRmKey: $(TerraformFile)
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-        displayName: 'Terraform : azurerm'
-        inputs:
-          command: apply
-          environmentServiceNameAzureRM: $(ServiceConnection)      
+      displayName: 'Terraform : azurerm'
+      inputs:
+        command: apply
+        environmentServiceNameAzureRM: $(ServiceConnection)      
