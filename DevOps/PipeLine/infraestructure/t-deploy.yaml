@@ -31,10 +31,14 @@ stages:
         backendAzureRmResourceGroupName: $(ResourceGroupTerraform)
         backendAzureRmStorageAccountName: $(StoregeAccountTerraform)
         backendAzureRmContainerName: $(TerraformContainer)
-        backendAzureRmKey: $(TerraformFile)    
+        backendAzureRmKey: $(TerraformFile)  
+
+    - script: | 
+        chmod +x .terraform/providers/registry.terraform.io/hashicorp/azurerm/3.42.0/linux_amd64/terraform-provider-azurerm_v3.42.0_x5        
+      displayName: ejemplo
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-      displayName: 'Terraform : apply'
+      displayName: 'Terraform : plan'
       inputs:
         command: plan
         commandOptions: '-var-file=$(Build.ArtifactStagingDirectory)/$(FileVar)'
