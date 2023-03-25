@@ -35,5 +35,5 @@ stages:
       displayName: 'Terraform : apply'
       inputs:
         command: apply
-        commandOptions: '-var-file=$(FileVar)'
+        commandOptions: '-var-file=$(System.DefaultWorkingDirectory)/$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)      
