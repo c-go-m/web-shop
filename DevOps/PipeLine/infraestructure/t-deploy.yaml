@@ -33,6 +33,11 @@ stages:
         backendAzureRmContainerName: $(TerraformContainer)
         backendAzureRmKey: $(TerraformFile)  
 
+    - script: | 
+        cd /opt/hostedtoolcache/terraform/1.4.2/x64/
+        ls        
+      displayName: ejemplo        
+
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
       displayName: 'Terraform : plan'
       inputs:
@@ -49,8 +54,5 @@ stages:
         commandOptions: '-var-file=$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)  
 
-    - script: | 
-        cd $(Build.ArtifactStagingDirectory)
-        ls        
-      displayName: ejemplo        
+
 
