@@ -33,13 +33,13 @@ stages:
         backendAzureRmContainerName: $(TerraformContainer)
         backendAzureRmKey: $(TerraformFile)  
 
-    - script: | 
-        cd /opt/hostedtoolcache/terraform/1.4.2/x64/
-        pwd
-        echo $(System.DefaultWorkingDirectory)
-        echo $(Build.ArtifactStagingDirectory)
-        ls -l /opt/hostedtoolcache/terraform/1.4.2/x64/      
-      displayName: ejemplo        
+    #- script: | 
+    #    cd /opt/hostedtoolcache/terraform/1.4.2/x64/
+    #    pwd
+    #    echo $(System.DefaultWorkingDirectory)
+    #    echo $(Build.ArtifactStagingDirectory)
+    #    ls -l /opt/hostedtoolcache/terraform/1.4.2/x64/      
+    #  displayName: ejemplo        
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
       displayName: 'Terraform : plan'
