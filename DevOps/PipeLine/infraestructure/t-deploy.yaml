@@ -1,9 +1,5 @@
 parameters:  
-  ServiceConnection: default
-  ResourceGroupTerraform: default
-  StoregeAccountTerraform: default
-  TerraformContainer: default
-  TerraformFile: default
+  ServiceConnection: default  
   FileVar: default
 
 stages:
@@ -12,17 +8,11 @@ stages:
   - job: 'Deploy_Terraform'
     steps:
 
-    - task: DownloadPipelineArtifact@2
-      displayName: 'Get Artifact'
-      inputs:
-        artifact: drop
-        path: $(Build.ArtifactStagingDirectory)        
-
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
       displayName: 'Terraform : plan'
       inputs:
         command: plan
-        workingDirectory: '$(Build.ArtifactStagingDirectory)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)$(PathProyect)'
         commandOptions: '-var-file=$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)   
 
@@ -30,11 +20,11 @@ stages:
       displayName: 'Terraform : apply'
       inputs:
         command: apply
-        workingDirectory: '$(Build.ArtifactStagingDirectory)'
+        workingDirectory: '$(System.DefaultWorkingDirectory)$(PathProyect)'
         commandOptions: '-var-file=$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)  
 
     - script: | 
-        cd $(Build.ArtifactStagingDirectory)
+        cd '$(System.DefaultWorkingDirectory)$(PathProyect)'
         ls        
       displayName: ejemplo        

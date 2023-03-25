@@ -30,15 +30,3 @@ stages:
       inputs:
         command: validate
         workingDirectory: '$(System.DefaultWorkingDirectory)$(PathProyect)'
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)$(PathProyect)'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'   
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact'           
-      inputs:
-        targetPath: $(Build.ArtifactStagingDirectory)
-        artifactName: drop
