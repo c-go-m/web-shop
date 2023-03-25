@@ -1,5 +1,9 @@
 parameters:  
-  ServiceConnection: default  
+  ServiceConnection: default
+  ResourceGroupTerraform: default
+  StoregeAccountTerraform: default
+  TerraformContainer: default
+  TerraformFile: default
   FileVar: default
 
 stages:
@@ -8,23 +12,45 @@ stages:
   - job: 'Deploy_Terraform'
     steps:
 
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Get Artifact'
+      inputs:
+        artifact: drop
+        path: $(Build.ArtifactStagingDirectory)       
+
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@1
+      displayName: 'Install Terraform latest'
+   
+
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-      displayName: 'Terraform : plan'
+      displayName: 'Terraform : init'
+      inputs:
+        command: init
+        workingDirectory: '$(Build.ArtifactStagingDirectory)'
+        backendServiceArm: $(ServiceConnection)
+        backendAzureRmResourceGroupName: $(ResourceGroupTerraform)
+        backendAzureRmStorageAccountName: $(StoregeAccountTerraform)
+        backendAzureRmContainerName: $(TerraformContainer)
+        backendAzureRmKey: $(TerraformFile)    
+
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+      displayName: 'Terraform : apply'
       inputs:
         command: plan
-        workingDirectory: '$(System.DefaultWorkingDirectory)$(PathProyect)'
-        commandOptions: '-var-file=$(FileVar)'
-        environmentServiceNameAzureRM: $(ServiceConnection)   
+        commandOptions: '-var-file=$(Build.ArtifactStagingDirectory)/$(FileVar)'
+        environmentServiceNameAzureRM: $(ServiceConnection)  
+        workingDirectory: '$(Build.ArtifactStagingDirectory)'   
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
       displayName: 'Terraform : apply'
       inputs:
         command: apply
-        workingDirectory: '$(System.DefaultWorkingDirectory)$(PathProyect)'
+        workingDirectory: '$(Build.ArtifactStagingDirectory)'
         commandOptions: '-var-file=$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)  
 
     - script: | 
-        cd '$(System.DefaultWorkingDirectory)$(PathProyect)'
+        cd $(Build.ArtifactStagingDirectory)
         ls        
       displayName: ejemplo        
+
