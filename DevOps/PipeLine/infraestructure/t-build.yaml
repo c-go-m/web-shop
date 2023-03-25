@@ -1,19 +1,10 @@
-variables:
-  - name: System.Debug
-    value: true
-
-trigger:
-  branches:
-    include:
-    - main
-  paths:
-    include:
-    - DevOps/Infraestructure/*.
-
-name: web_shop_infraestructure_$(Build.SourceBranchName)
-
-pool:
-  vmImage: ubuntu-latest
+parameters:
+  PathProyect: default
+  ServiceConnection: default
+  ResourceGroupTerraform: default
+  StoregeAccountTerraform: default
+  TerraformContainer: default
+  TerraformFile: default
 
 stages:
 - stage: Build
@@ -27,23 +18,23 @@ stages:
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
       displayName: 'Terraform : init'
       inputs:
-        workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps/Infraestructure/Azure'
-        backendServiceArm: AzureAccount
-        backendAzureRmResourceGroupName: terraform
-        backendAzureRmStorageAccountName: saterraformic
-        backendAzureRmContainerName: terraform
-        backendAzureRmKey: tf/terraform.tfstate
+        workingDirectory: '$(System.DefaultWorkingDirectory)$(PathProyect)'
+        backendServiceArm: $(ServiceConnection)
+        backendAzureRmResourceGroupName: $(ResourceGroupTerraform)
+        backendAzureRmStorageAccountName: $(StoregeAccountTerraform)
+        backendAzureRmContainerName: $(TerraformContainer)
+        backendAzureRmKey: $(TerraformFile)
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
       displayName: 'Terraform : validate'
       inputs:
         command: validate
-        workingDirectory: '$(System.DefaultWorkingDirectory)/DevOps/Infraestructure/Azure'
+        workingDirectory: '$(System.DefaultWorkingDirectory)$(PathProyect)'
 
     - task: CopyFiles@2
       displayName: 'Copy Files'
       inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)/DevOps/Infraestructure/Azure'
+        SourceFolder: '$(System.DefaultWorkingDirectory)$(PathProyect)'
         TargetFolder: '$(System.DefaultWorkingDirectory)'   
 
     - task: PublishBuildArtifacts@1

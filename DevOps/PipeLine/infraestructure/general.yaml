@@ -1,0 +1,36 @@
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    include:
+    - DevOps/Infraestructure/*.
+
+variables:
+  - template: t-variables.yaml
+
+name: web_shop_infraestructure_$(Build.SourceBranchName)
+
+pool:
+  vmImage: ubuntu-latest
+  
+stages:
+  # Build
+  - template: t-build.yaml
+    parameters: 
+      PathProyect: $(PathProyect)
+      ServiceConnection: $(ServiceConnection)
+      ResourceGroupTerraform: $(ResourceGroupTerraform)
+      StoregeAccountTerraform: $(StoregeAccountTerraform)
+      TerraformContainer: $(TerraformContainer)
+      TerraformFile: $(TerraformFile)
+
+  # Deploy Dev
+  - template: t-deploy.yaml
+    parameters:       
+      ServiceConnection: $(ServiceConnection)
+      ResourceGroupTerraform: $(ResourceGroupTerraform)
+      StoregeAccountTerraform: $(StoregeAccountTerraform)
+      TerraformContainer: $(TerraformContainer)
+      TerraformFile: $(TerraformFile)
+

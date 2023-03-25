@@ -1,0 +1,18 @@
+variables:
+  # General
+  - name: System.Debug
+    value: true
+  - name: ServiceConnection
+    value: AzureAccount
+  - name: ResourceGroupTerraform
+    value: terraform
+  - name: StoregeAccountTerraform
+    value: saterraformic
+  - name: TerraformContainer
+    value: terraform    
+  - name: TerraformFile
+    value: tf/terraform.tfstate     
+  # Build
+  - name: PathProyect
+    value: /DevOps/Infraestructure/Azure            
+  # Deploy
