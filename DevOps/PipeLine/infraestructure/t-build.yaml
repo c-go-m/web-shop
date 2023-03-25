@@ -38,4 +38,8 @@ stages:
         TargetFolder: '$(System.DefaultWorkingDirectory)'   
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'           
+      displayName: 'Publish Artifact'           
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+        artifact: 'drop'
+        publishLocation: 'pipeline'
