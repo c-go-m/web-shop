@@ -16,25 +16,12 @@ stages:
       displayName: 'Get Artifact'
       inputs:
         artifact: drop
-        path: $(Build.ArtifactStagingDirectory)       
-
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
-      displayName: 'Install Terraform latest'
+        path: $(Build.ArtifactStagingDirectory)        
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-      displayName: 'Terraform : init'
+      displayName: 'Terraform : plan'
       inputs:
-        workingDirectory: '$(Build.ArtifactStagingDirectory)'
-        backendServiceArm: $(ServiceConnection)
-        backendAzureRmResourceGroupName: $(ResourceGroupTerraform)
-        backendAzureRmStorageAccountName: $(StoregeAccountTerraform)
-        backendAzureRmContainerName: $(TerraformContainer)
-        backendAzureRmKey: $(TerraformFile)    
-
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-      displayName: 'Terraform : apply'
-      inputs:
-        command: apply
+        command: plan
         workingDirectory: '$(Build.ArtifactStagingDirectory)'
         commandOptions: '-var-file=$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)   
