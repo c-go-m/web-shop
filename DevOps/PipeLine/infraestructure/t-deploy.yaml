@@ -29,11 +29,11 @@ stages:
         backendAzureRmResourceGroupName: $(ResourceGroupTerraform)
         backendAzureRmStorageAccountName: $(StoregeAccountTerraform)
         backendAzureRmContainerName: $(TerraformContainer)
-        backendAzureRmKey: $(TerraformFile)
+        backendAzureRmKey: $(TerraformFile)    
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
-      displayName: 'Terraform : azurerm'
+      displayName: 'Terraform : apply'
       inputs:
         command: apply
-        commandOptions: '-var-file="$(FileVar)"'
+        commandOptions: '-var-file=$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)      
