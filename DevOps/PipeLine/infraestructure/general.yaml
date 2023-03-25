@@ -26,12 +26,12 @@ stages:
       TerraformFile: $(TerraformFile)
 
   # Deploy Dev
-#  - template: t-deploy.yaml
-#    parameters:       
-#      ServiceConnection: $(ServiceConnection)
-#      ResourceGroupTerraform: $(ResourceGroupTerraform)
-#      StoregeAccountTerraform: $(StoregeAccountTerraform)
-#      TerraformContainer: $(TerraformContainer)
-#      TerraformFile: $(TerraformFile)
-#      FileVar: $(FileVar)
+  - template: t-deploy.yaml
+    parameters:       
+      ServiceConnection: $(ServiceConnection)
+      ResourceGroupTerraform: $(ResourceGroupTerraform)
+      StoregeAccountTerraform: $(StoregeAccountTerraform)
+      TerraformContainer: $(TerraformContainer)
+      TerraformFile: $(TerraformFile)
+      FileVar: $(FileVar)
 
