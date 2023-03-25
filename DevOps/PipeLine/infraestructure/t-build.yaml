@@ -35,10 +35,11 @@ stages:
       displayName: 'Copy Files'
       inputs:
         SourceFolder: '$(System.DefaultWorkingDirectory)$(PathProyect)'
-        TargetFolder: '$(System.DefaultWorkingDirectory)'   
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'   
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact'           
       inputs:
-        targetPath: $(System.DefaultWorkingDirectory)
-        artifactName: drop
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'

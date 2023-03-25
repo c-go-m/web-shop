@@ -11,10 +11,13 @@ stages:
   - job: 'Deploy_Terraform'
     steps:
 
-    - task: DownloadPipelineArtifact@2
+    - task: DownloadPipelineArtifact@0
       displayName: 'Get Artifact'
       inputs:
-        artifact: 'drop'
+        buildType: 'current'
+        downloadType: 'single'
+        downloadType: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
 
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
       displayName: 'Install Terraform latest'
