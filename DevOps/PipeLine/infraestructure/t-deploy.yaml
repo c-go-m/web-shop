@@ -27,7 +27,7 @@ stages:
       displayName: ejemplo
    
 
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
       displayName: 'Terraform : init'
       inputs:
         command: init
@@ -38,7 +38,7 @@ stages:
         backendAzureRmContainerName: $(TerraformContainer)
         backendAzureRmKey: $(TerraformFile)    
 
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
       displayName: 'Terraform : apply'
       inputs:
         command: plan
@@ -46,7 +46,7 @@ stages:
         environmentServiceNameAzureRM: $(ServiceConnection)  
         workingDirectory: '$(Build.ArtifactStagingDirectory)'   
 
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
       displayName: 'Terraform : apply'
       inputs:
         command: apply
