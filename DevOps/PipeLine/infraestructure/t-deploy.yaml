@@ -21,16 +21,9 @@ stages:
     - task: ms-devlabs.custom-terraform-tasks.custom-terraform-installer-task.TerraformInstaller@0
       displayName: 'Install Terraform latest'
 
-    - script: | 
-        cd $(Build.ArtifactStagingDirectory)
-        ls        
-      displayName: ejemplo
-   
-
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
       displayName: 'Terraform : init'
       inputs:
-        command: init
         workingDirectory: '$(Build.ArtifactStagingDirectory)'
         backendServiceArm: $(ServiceConnection)
         backendAzureRmResourceGroupName: $(ResourceGroupTerraform)
@@ -38,18 +31,23 @@ stages:
         backendAzureRmContainerName: $(TerraformContainer)
         backendAzureRmKey: $(TerraformFile)    
 
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
-      displayName: 'Terraform : apply'
-      inputs:
-        command: plan
-        commandOptions: '-var-file=$(Build.ArtifactStagingDirectory)/$(FileVar)'
-        environmentServiceNameAzureRM: $(ServiceConnection)  
-        workingDirectory: '$(Build.ArtifactStagingDirectory)'   
-
-    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV3@3
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
       displayName: 'Terraform : apply'
       inputs:
         command: apply
-        commandOptions: '-var-file=$(Build.ArtifactStagingDirectory)/$(FileVar)'
+        workingDirectory: '$(Build.ArtifactStagingDirectory)'
+        commandOptions: '-var-file=$(FileVar)'
+        environmentServiceNameAzureRM: $(ServiceConnection)   
+
+    - task: ms-devlabs.custom-terraform-tasks.custom-terraform-release-task.TerraformTaskV4@4
+      displayName: 'Terraform : apply'
+      inputs:
+        command: apply
+        workingDirectory: '$(Build.ArtifactStagingDirectory)'
+        commandOptions: '-var-file=$(FileVar)'
         environmentServiceNameAzureRM: $(ServiceConnection)  
-        workingDirectory: '$(Build.ArtifactStagingDirectory)'    
+
+    - script: | 
+        cd $(Build.ArtifactStagingDirectory)
+        ls        
+      displayName: ejemplo        
