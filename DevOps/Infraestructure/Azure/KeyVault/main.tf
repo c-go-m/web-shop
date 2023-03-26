@@ -15,7 +15,7 @@ resource "azurerm_key_vault" "key-vault" {
 }
 
 resource "azurerm_key_vault_secret" "key-vault-secret" {  
-  name         = "kv-azas${var.name}"
+  name         = "kv-secret-azas${var.name}"
   value        = var.secret-sa
   key_vault_id = azurerm_key_vault.key-vault.id
 }
